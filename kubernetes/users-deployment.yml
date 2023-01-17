@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+      - name: users
+        image: howcool/kube-demo-users:latest
+        env:
+          - name: AUTH_ADDRESS
+            # value: "10.100.228.90"
+            value: "auth-service.default" # Get from kubectl get namespaces
+      # - name: auth
+      #   image: howcool/kube-demo-auth:latest
